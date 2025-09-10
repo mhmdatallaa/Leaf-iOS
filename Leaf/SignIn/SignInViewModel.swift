@@ -15,23 +15,27 @@ final class SignInViewModel: ObservableObject {
     @Published var password: String = ""
     @Published var error: String = ""
     @Published var showError: Bool = false
+    @Published var isLoading: Bool = false
     
     // Validation states
-    @Published var isEmailValid = false
-    @Published var showEmailError = false
-    @Published var isPasswordValid = false
-    @Published var showPasswordError = false
+    @Published var isEmailValid: Bool = false
+    @Published var showEmailError: Bool = false
+    @Published var isPasswordValid: Bool = false
+    @Published var showPasswordError: Bool = false
     
     
     func signIn() async -> Bool {
         
         do {
+            isLoading = true
             try await AuthService.shared.signInUser(email: email, password: password)
+            isLoading = false
             Logger.shared.log("User signed in successfully")
             return true
         } catch  {
             self.error = error.localizedDescription
             showError = true
+            isLoading = false
             Logger.shared.log("\(error)", level: .error)
         }
         return false
@@ -49,4 +53,5 @@ final class SignInViewModel: ObservableObject {
             isPasswordValid = password.isValidPassword()
             showPasswordError = !password.isValidPassword()
     }
+
 }

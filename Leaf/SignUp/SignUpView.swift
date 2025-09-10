@@ -8,10 +8,6 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var firstName: String = ""
-    @State private var lastName: String = ""
     @State private var isPasswordVisible: Bool = false
     @State private var showSignInView: Bool = false
     @Environment(\.dismiss) var dismiss
@@ -84,76 +80,122 @@ extension SignUpView {
     }
     
     private var firstNameField: some View {
-        TextField("FirstName", text: $firstName)
-            .padding()
-            .cornerRadius(25)
-            .overlay {
-                RoundedRectangle(cornerRadius: 25)
-                    .stroke(Color(.systemGray4), lineWidth: 1)
+        VStack(alignment: .leading, spacing: 4) {
+            TextField("First name", text: $viewModel.firstName)
+                .padding()
+                .cornerRadius(25)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 25)
+                        .stroke(Color(.systemGray4), lineWidth: 1)
+                }
+                .onChange(of: viewModel.firstName) { viewModel.validatFirstName() }
+            if viewModel.showFirstNameError {
+                Text("The name should have more than 2 characters.")
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .padding(.leading, 4)
             }
+        }
     }
     
     private var lastNameField: some View {
-        TextField("FirstName", text: $lastName)
-            .padding()
-            .cornerRadius(25)
-            .overlay {
-                RoundedRectangle(cornerRadius: 25)
-                    .stroke(Color(.systemGray4), lineWidth: 1)
+        VStack(alignment: .leading, spacing: 4) {
+            TextField("Last name", text: $viewModel.lastName)
+                .padding()
+                .cornerRadius(25)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 25)
+                        .stroke(Color(.systemGray4), lineWidth: 1)
+                }
+                .onChange(of: viewModel.lastName) { viewModel.validateLastName() }
+            if viewModel.showLastNameError {
+                Text("The name should have more that 2 characters.")
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .padding(.leading, 4)
             }
+        }
     }
     
     private var emailField: some View {
-        TextField("Email", text: $viewModel.email)
-            .keyboardType(.emailAddress)
+        VStack(alignment: .leading, spacing: 4) {
+            TextField("Email", text: $viewModel.email)
+                .keyboardType(.emailAddress)
+                .padding()
+                .cornerRadius(25)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 25)
+                        .stroke(Color(.systemGray4), lineWidth: 1)
+                )
+                .onChange(of: viewModel.email) { viewModel.validateEmail() }
+            if viewModel.showEmailError {
+                Text("Please enter a valid email address")
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .padding(.leading, 4)
+            }
+        }
+    }
+    
+    private var passwordField: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                if isPasswordVisible {
+                    TextField("Password", text: $viewModel.password)
+                } else {
+                    SecureField("Password", text: $viewModel.password)
+                }
+                Button(action: { isPasswordVisible.toggle() }) {
+                    Image(systemName: isPasswordVisible ? "eye.fill" : "eye.slash.fill")
+                        .foregroundColor(.gray)
+                }
+            }
             .padding()
             .cornerRadius(25)
             .overlay(
                 RoundedRectangle(cornerRadius: 25)
                     .stroke(Color(.systemGray4), lineWidth: 1)
             )
-    }
-    
-    private var passwordField: some View {
-        HStack {
-            if isPasswordVisible {
-                TextField("Password", text: $viewModel.password)
-            } else {
-                SecureField("Password", text: $viewModel.password)
-            }
-            Button(action: { isPasswordVisible.toggle() }) {
-                Image(systemName: isPasswordVisible ? "eye.fill" : "eye.slash.fill")
-                    .foregroundColor(.gray)
+            .onChange(of: viewModel.password) { viewModel.validatePassword() }
+            if viewModel.showPasswordError {
+                Text("Password must not be less that 8 characters long")
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .padding(.leading, 4)
             }
         }
-        .padding()
-        .cornerRadius(25)
-        .overlay(
-            RoundedRectangle(cornerRadius: 25)
-                .stroke(Color(.systemGray4), lineWidth: 1)
-        )
     }
     
     private var signUpButton: some View {
         Button(action: {
             Task {
-                do {
-                    try await viewModel.signUp()
-                    Logger.shared.log("User created successfully")
-                } catch {
-                    Logger.shared.log("\(error.localizedDescription)", level: .error)
-                }
+                await viewModel.signUp()
             }
         }) {
-            Text("Sign Up")
-                .foregroundColor(.white)
-                .fontWeight(.semibold)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.green)
-                .cornerRadius(25)
-                .shadow(color: Color.green.opacity(0.3), radius: 5, x: 0, y: 3)
+            if viewModel.isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .foregroundColor(.white)
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.green)
+                    .cornerRadius(25)
+            } else {
+                Text("Sign Up")
+                    .foregroundColor(.white)
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(
+                        !viewModel.isEmailValid || !viewModel.isPasswordValid ?
+                        Color.gray : Color.green
+                    )
+                    .cornerRadius(25)
+                    .shadow(color: Color.green.opacity(0.3), radius: 5, x: 0, y: 3)
+            }
         }
+        .disabled(!viewModel.isEmailValid || !viewModel.isPasswordValid)
         .padding(.top, 10)
     }
     

@@ -140,17 +140,28 @@ struct SignInView: View {
                         }
                     }
             }) {
-                Text("Sign In")
-                    .foregroundColor(.white)
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(
-                        !viewModel.isEmailValid || !viewModel.isPasswordValid ?
-                        Color.gray : Color.green
-                    )
-                    .cornerRadius(25)
-                    .shadow(color: Color.green.opacity(0.3), radius: 5, x: 0, y: 3)
+                if viewModel.isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .foregroundColor(.white)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.green)
+                        .cornerRadius(25)
+                } else {
+                    Text("Sign In")
+                        .foregroundColor(.white)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(
+                            !viewModel.isEmailValid || !viewModel.isPasswordValid ?
+                            Color.gray : Color.green
+                        )
+                        .cornerRadius(25)
+                        .shadow(color: Color.green.opacity(0.3), radius: 5, x: 0, y: 3)
+                }
             }
             .disabled(!viewModel.isEmailValid || !viewModel.isPasswordValid)
             .padding(.top, 10)
