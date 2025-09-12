@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct SignInView: View {
-    @State private var email: String = ""
-    @State private var password: String = ""
     @State private var isPasswordVisible: Bool = false
     @State private var showSignUpView: Bool = false
-    @State private var showAlert: Bool = false
+    @State private var showForgetPasswordSheet = false
     @Binding var showSignInView: Bool
     @Environment(\.dismiss) var dismiss
     @StateObject private var viewModel = SignInViewModel()
@@ -50,12 +48,15 @@ struct SignInView: View {
         .fullScreenCover(isPresented: $showSignUpView) {
             SignUpView()
         }
-        .alert("Error", isPresented: $viewModel.showError) {
+        .alert("", isPresented: $viewModel.showAlert) {
             Button("OK", role: .cancel) {
-                viewModel.error = ""
+                viewModel.alertMessage = ""
             }
         } message: {
-            Text(viewModel.error)
+            Text(viewModel.alertMessage)
+        }
+        .sheet(isPresented: $showForgetPasswordSheet) {
+            resetPasswordSheet
         }
         .onDisappear {
             Logger.shared.log("\(#file) view disappeared")
@@ -169,11 +170,38 @@ struct SignInView: View {
         
         private var forgetPasswordButton: some View {
             Button(action: {
-                // handle forgot password
+                showForgetPasswordSheet = true
             }) {
                 Text("Forgot Password?")
                     .foregroundColor(.gray)
             }
+        }
+        
+        private var resetPasswordSheet: some View {
+            VStack {
+                TextField("Email", text: $viewModel.email)
+                    .padding()
+                    .cornerRadius(25)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 25)
+                            .stroke(Color(.systemGray4), lineWidth: 1)
+                    }
+                Button {
+                    Task {
+                       await viewModel.forgetPassword(for: viewModel.email)
+                        showForgetPasswordSheet = false
+                    }
+                } label: {
+                    if viewModel.isLoading {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                    } else {
+                        Text("Reset Password")
+                    }
+                }
+                .padding()
+            }
+            .padding()
         }
         
         private var divider: some View {

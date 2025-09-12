@@ -13,8 +13,8 @@ class SignUpViewModel: ObservableObject {
     @Published var lastName: String = ""
     @Published var email: String = ""
     @Published var password: String = ""
-    @Published var error: String = ""
-    @Published var showError: Bool = false
+    @Published var alertMessage: String = ""
+    @Published var showAlert: Bool = false
     @Published var isLoading: Bool = false
     
     // Validation states
@@ -32,10 +32,12 @@ class SignUpViewModel: ObservableObject {
             isLoading = true
             try await AuthService.shared.createUser(email: email, password: password)
             isLoading = false
+            showAlert = true
+            alertMessage = "Signed up successfully, go to sign-in page and use your email and password to sign in."
             Logger.shared.log("User signed-up successfully")
         } catch {
-            self.error = error.localizedDescription
-            showError = true
+            self.alertMessage = error.localizedDescription
+            showAlert = true
             isLoading = false
             Logger.shared.log("\(error)", level: .error)
         }

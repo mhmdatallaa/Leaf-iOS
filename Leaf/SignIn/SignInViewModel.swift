@@ -13,8 +13,8 @@ import Foundation
 final class SignInViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
-    @Published var error: String = ""
-    @Published var showError: Bool = false
+    @Published var alertMessage: String = ""
+    @Published var showAlert: Bool = false
     @Published var isLoading: Bool = false
     
     // Validation states
@@ -33,12 +33,30 @@ final class SignInViewModel: ObservableObject {
             Logger.shared.log("User signed in successfully")
             return true
         } catch  {
-            self.error = error.localizedDescription
-            showError = true
+            self.alertMessage = error.localizedDescription
+            showAlert = true
             isLoading = false
             Logger.shared.log("\(error)", level: .error)
         }
         return false
+    }
+    
+    func forgetPassword(for email: String) async {
+        do {
+            isLoading = true
+            try await  AuthService.shared.resetPassword(email: email)
+            isLoading = false
+            showAlert = true
+            alertMessage = "An email has been sent, check out your inbox."
+            Logger.shared.log("User is reseting password")
+        } catch {
+            // handle error
+            Logger.shared.log("Error reseting password")
+            isLoading = false
+            showAlert = true
+            alertMessage = error.localizedDescription
+
+        }
     }
     
     func validateEmail() {

@@ -54,6 +54,13 @@ struct SignUpView: View {
         .onDisappear {
             Logger.shared.log("\(#file) view disappeared")
         }
+        .alert("", isPresented: $viewModel.showAlert) {
+            Button("Ok", role: .cancel) {
+                viewModel.alertMessage = ""
+            }
+        } message: {
+            Text(viewModel.alertMessage)
+        }
     }
 }
 
