@@ -12,43 +12,39 @@ struct SearchView: View {
     @State private var selectedSubject = ""
     var body: some View {
         NavigationView {
-                VStack {
-                    searchField
-//                        .background(Color.yellow)
-//                        .frame(height: 100)
-                        .padding(.top, 180)
-
-                    subjectSection
-//                        .background(Color.red)
-                        .frame(height: 100)
-                    
-                    Text("Popular")
-                        .padding(.trailing, 210)
-//                        .foregroundStyle(.black)
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    ScrollView {
-                        LazyVGrid(columns: [
-                            GridItem(),
-                            GridItem(),
-                            GridItem(),
-                        ], spacing: 50) {
-                            ForEach(0..<30) {_ in
-                                BookCellView()
-                            }
+            VStack {
+                searchField
+                    .padding(.top, 180)
+                
+                subjectSection
+                    .frame(height: 100)
+                
+                Text("Popular")
+                    .padding(.trailing, 210)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                ScrollView {
+                    LazyVGrid(columns: [
+                        GridItem(),
+                        GridItem(),
+                        //                            GridItem(),
+                    ], spacing: 50) {
+                        ForEach(viewModel.books) { book in
+                            BookCellView(book: book)
                         }
                     }
-                    .scrollIndicators(.hidden)
-                    
-                    
-
+                }
+                .scrollIndicators(.hidden)
+                
+                
+                
             }
             .padding(.horizontal)
             .navigationTitle("Leaf")
-//            .searchable(text: $viewModel.searchText, prompt: "Search books by name or author")
             .ignoresSafeArea()
-//            .navigationBarTitleDisplayMode(.inline)
-//            .foregroundStyle(.green)
+        }
+        .onAppear {
+            Task { await viewModel.getBooksBySubject(selectedSubject) }
         }
     }
 }
@@ -76,7 +72,7 @@ extension SearchView {
         LazyHGrid(rows: [
             GridItem(.fixed(30)),
             GridItem(.fixed(30)),
-//                        GridItem(),
+            //                        GridItem(),
         ], alignment: .top, spacing: 15) {
             ForEach(viewModel.subjects, id: \.self) { subject in
                 Text(subject)
@@ -86,9 +82,13 @@ extension SearchView {
                     .padding(.vertical, 5)
                     .foregroundStyle(.white)
                     .onTapGesture {
+                        Task {
+                            await viewModel.getBooksBySubject(selectedSubject)
+                        }
                         withAnimation {
                             selectedSubject = subject
                         }
+                        
                         Logger.shared.log("\(subject) tapped")
                     }
                     .background {

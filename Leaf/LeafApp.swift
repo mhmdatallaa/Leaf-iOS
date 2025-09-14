@@ -14,8 +14,8 @@ struct LeafApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                SearchView()
-                    .navigationTitle("Leaf")
+                RootView()
+//                    .navigationTitle("Leaf")
             }
         }
     }

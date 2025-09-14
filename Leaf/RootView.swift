@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct RootView: View {
-//    @Binding var name: String
+    //    @Binding var name: String
     @State private var showSignInView: Bool = false
-
+    
     var body: some View {
-
         ZStack {
             NavigationStack {
-                SettingView(showLoginView: $showSignInView, name: "")
+                
+                TabView {
+                    SearchView()
+                    SettingView(showLoginView: $showSignInView, name: "")
+                    
+                }
+                //
+                //                SettingView(showLoginView: $showSignInView, name: "")
             }
         }
         .onAppear {
