@@ -12,16 +12,17 @@ final class CoverViewModel: ObservableObject {
     @Published var image: UIImage?
     @Published var isLoading = false
     
-    private let repository: ImageRepository
+//    private let repository: BookCoverRepository
+    private let fetchCoverUseCase = FetchBookCoverUseCase()
     
-    init(repository: ImageRepository = ImageRepositoryUseCase()) {
-        self.repository = repository
-    }
+//    init(repository: BookCoverRepository = DefaultBookCoverRepository()) {
+//        self.repository = repository
+//    }
     
     func getCover(for book: Book) async {
         do {
             isLoading = true
-            let image = try await repository.fetchCover(for: book)
+            let image = try await fetchCoverUseCase.execute(for: book)
             self.image = image
         } catch {
             Logger.shared.log(error.localizedDescription, level: .error)

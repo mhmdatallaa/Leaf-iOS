@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-protocol ImageRepository {
+protocol BookCoverRepository {
     func fetchCover(for book: Book) async throws -> UIImage
 }
 
-struct ImageRepositoryUseCase: ImageRepository {
+struct DefaultBookCoverRepository: BookCoverRepository {
     func fetchCover(for book: Book) async throws -> UIImage {
         let response: Data = try await NetworkService.shared.requestData(OLCoversAPI.bookCover(id: book.coverID ?? 0, size: book.coverSize ?? .medium))
         guard let image = UIImage(data: response) else {

@@ -12,7 +12,7 @@ protocol BooksRepository {
     func searchBooks(query: String) async throws -> Search
 }
 
-struct BooksRepositoryUseCase: BooksRepository {
+struct DefaultBooksRepository: BooksRepository {
     func getBooks(by subject: String) async throws -> Subject {
         let response: Subject = try await NetworkService.shared.request(OLBooksAPI.booksBySubject(suject: subject), as: Subject.self)
         

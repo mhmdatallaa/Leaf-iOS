@@ -17,15 +17,16 @@ class SearchViewModel: ObservableObject {
     var isLoading: Bool = false
     var errorMessage: String?
     
-    private let repository: BooksRepository
+    private let getBooksBySubjectUseCase = GetBooksBySubjectUseCase()
+    private let searchBooksUseCase = SearchBooksUseCase()
     
-    init(repository: BooksRepository = BooksRepositoryUseCase()) {
-        self.repository = repository
-    }
+//    init(repository: BooksRepository = DefaultBooksRepository()) {
+//        self.repository = repository
+//    }
     func searchBook(_ text: String) async {
         do {
             isLoading = true
-            let result = try await repository.searchBooks(query: text)
+            let result = try await searchBooksUseCase.execute(query: text)
             let searchResult: Search = result
             self.books = searchResult.toBooks
         } catch {
@@ -38,7 +39,7 @@ class SearchViewModel: ObservableObject {
     func getBooksBySubject(_ subject: String) async{
         do {
             isLoading = true
-            let result = try await repository.getBooks(by: subject)
+            let result = try await getBooksBySubjectUseCase.execute(subject: subject)
             self.books = result.works
             Logger.shared.log("Books: \(books.count)")
         } catch {
