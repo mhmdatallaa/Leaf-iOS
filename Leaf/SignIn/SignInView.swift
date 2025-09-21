@@ -71,6 +71,11 @@ struct SignInView: View {
     extension SignInView {
         private var welcomeTitle: some View {
             VStack(spacing: 8) {
+                Text("Leaf")
+                    .foregroundStyle(.green)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.bottom)
                 Text("Welcome Back,")
                     .font(.title)
                     .fontWeight(.bold)

@@ -22,6 +22,18 @@ class SearchViewModel: ObservableObject {
     init(repository: BooksRepository = BooksRepositoryUseCase()) {
         self.repository = repository
     }
+    func searchBook(_ text: String) async {
+        do {
+            isLoading = true
+            let result = try await repository.searchBooks(query: text)
+            let searchResult: Search = result
+            self.books = searchResult.toBooks
+        } catch {
+            errorMessage = error.localizedDescription
+            Logger.shared.log(error.localizedDescription, level: .error)
+            Logger.shared.log("Books: \(books.count)")
+        }
+    }
     
     func getBooksBySubject(_ subject: String) async{
         do {
@@ -29,7 +41,6 @@ class SearchViewModel: ObservableObject {
             let result = try await repository.getBooks(by: subject)
             self.books = result.works
             Logger.shared.log("Books: \(books.count)")
-            Logger.shared.log("love books \(result)")
         } catch {
             errorMessage = error.localizedDescription
             Logger.shared.log(error.localizedDescription, level: .error)

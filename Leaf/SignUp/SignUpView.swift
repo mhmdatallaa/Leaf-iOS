@@ -15,7 +15,6 @@ struct SignUpView: View {
     
     var body: some View {
         VStack(spacing: 24) {
-            
             // Title
             welcomeTitle
             
@@ -73,6 +72,11 @@ struct SignUpView: View {
 extension SignUpView {
     private var welcomeTitle: some View {
         VStack(spacing: 8) {
+            Text("Leaf")
+                .foregroundStyle(.green)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(.top, 50)
             Text("Welcome,")
                 .font(.title)
                 .fontWeight(.bold)

@@ -9,7 +9,7 @@ import SwiftUI
 
 protocol BooksRepository {
     func getBooks(by subject: String) async throws -> Subject
-    func searchBooks(query: String) async throws -> [Book]
+    func searchBooks(query: String) async throws -> Search
 }
 
 struct BooksRepositoryUseCase: BooksRepository {
@@ -19,8 +19,8 @@ struct BooksRepositoryUseCase: BooksRepository {
         return response
     }
     
-    func searchBooks(query: String) async throws -> [Book] {
-        let response: [Book] = try await NetworkService.shared.request(OLBooksAPI.search(query: query), as: [Book].self)
+    func searchBooks(query: String) async throws -> Search {
+        let response: Search = try await NetworkService.shared.request(OLBooksAPI.search(query: query), as: Search.self)
         return response
     }
 }

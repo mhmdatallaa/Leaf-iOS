@@ -12,39 +12,21 @@ struct SearchView: View {
     @State private var selectedSubject = ""
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(alignment: .leading) {
                 searchField
                     .padding(.top, 180)
                 
                 subjectSection
                     .frame(height: 100)
                 
-                Text("Popular")
-                    .padding(.trailing, 210)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                ScrollView {
-                    LazyVGrid(columns: [
-                        GridItem(),
-                        GridItem(),
-                        //                            GridItem(),
-                    ], spacing: 50) {
-                        ForEach(viewModel.books) { book in
-                            BookCellView(book: book)
-                        }
-                    }
-                }
-                .scrollIndicators(.hidden)
-                
-                
-                
+                booksSection
             }
             .padding(.horizontal)
             .navigationTitle("Leaf")
             .ignoresSafeArea()
         }
         .onAppear {
-            Task { await viewModel.getBooksBySubject(selectedSubject) }
+            Task { await viewModel.getBooksBySubject("fantasy") }
         }
     }
 }
@@ -59,7 +41,10 @@ extension SearchView {
     private var searchField: some View {
         HStack {
             Image(systemName: "magnifyingglass")
-            TextField("Search books by name or author", text: $viewModel.searchText)
+            TextField("Search books by Title or Author", text: $viewModel.searchText)
+                .onChange(of: viewModel.searchText) { oldValue, newValue in
+                    Task { await viewModel.searchBook(newValue) }
+                }
         }
         .padding()
         .overlay {
@@ -70,8 +55,8 @@ extension SearchView {
     
     private var subjectSection: some View {
         LazyHGrid(rows: [
-            GridItem(.fixed(30)),
-            GridItem(.fixed(30)),
+            GridItem(.fixed(20)),
+            GridItem(.fixed(20)),
             //                        GridItem(),
         ], alignment: .top, spacing: 15) {
             ForEach(viewModel.subjects, id: \.self) { subject in
@@ -80,8 +65,9 @@ extension SearchView {
                     .fontWeight(.bold)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 5)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(selectedSubject == subject && viewModel.searchText.isEmpty ? .white : .green)
                     .onTapGesture {
+                        viewModel.searchText = ""
                         Task {
                             await viewModel.getBooksBySubject(selectedSubject)
                         }
@@ -93,11 +79,29 @@ extension SearchView {
                     }
                     .background {
                         RoundedRectangle(cornerRadius: 15)
-                            .foregroundStyle(selectedSubject == subject ? Color.red : Color.green)
+                            .foregroundStyle(selectedSubject == subject && viewModel.searchText.isEmpty ? Color.green : Color.clear)
                     }
                 
             }
         }
-        .padding(.top)
+    }
+    
+    private var booksSection: some View {
+        VStack(alignment: .leading) {
+            Text(viewModel.searchText == "" ? "Books" : "Search for ``\(viewModel.searchText)``")
+                .font(viewModel.searchText.isEmpty ? .largeTitle : .callout)
+                .fontWeight(.bold)
+            ScrollView {
+                LazyVGrid(columns: [
+                    GridItem(),
+                    GridItem(),
+                ], spacing: 50) {
+                    ForEach(viewModel.books) { book in
+                        BookCellView(book: book)
+                    }
+                }
+            }
+            .scrollIndicators(.hidden)
+        }
     }
 }
