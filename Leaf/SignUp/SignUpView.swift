@@ -14,49 +14,47 @@ struct SignUpView: View {
     @StateObject private var viewModel = SignUpViewModel()
     
     var body: some View {
-        VStack(spacing: 24) {
-            // Title
-            welcomeTitle
-            
-            // FirstName
-            firstNameField
-            
-            //LastName
-            lastNameField
-            
-            // Email
-            emailField
-            
-            // Password
-            passwordField
-            
-            // Sign In button
-            signUpButton
-            
-            // SignIn
-            SignInButton
-            
-            // Divider
-            divider
-            
-            // Google Sign UP
-            googleSignUPButton
-            
-            Spacer()
-            
-            
+        ScrollView {
+            VStack(spacing: 28) {
+                
+                // MARK: - Title
+                welcomeTitle
+                
+                // MARK: - First Name
+                firstNameField
+                
+                // MARK: - Last Name
+                lastNameField
+                
+                // MARK: - Email
+                emailField
+                
+                // MARK: - Password
+                passwordField
+                
+                // MARK: - Sign Up Button
+                signUpButton
+                    .padding(.top, 12)
+                
+                // MARK: - Already have account
+                signInButton
+                
+                // MARK: - Divider
+                divider
+                
+                // MARK: - Google
+                googleSignUpButton
+                
+                Spacer(minLength: 40)
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, 50)
         }
-        .padding(.horizontal, 30)
         .fullScreenCover(isPresented: $showSignInView) {
             SignInView(showSignInView: $showSignInView)
         }
-        .onDisappear {
-            Logger.shared.log("\(#file) view disappeared")
-        }
         .alert("", isPresented: $viewModel.showAlert) {
-            Button("Ok", role: .cancel) {
-                viewModel.alertMessage = ""
-            }
+            Button("Ok", role: .cancel) { viewModel.alertMessage = "" }
         } message: {
             Text(viewModel.alertMessage)
         }
@@ -70,194 +68,183 @@ struct SignUpView: View {
 
 
 extension SignUpView {
+    
+    // MARK: - Title
     private var welcomeTitle: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 6) {
             Text("Leaf")
+                .font(.system(size: 42, weight: .bold))
                 .foregroundStyle(.green)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(.top, 50)
-            Text("Welcome,")
-                .font(.title)
-                .fontWeight(.bold)
-                .frame(maxWidth: .infinity, alignment: .leading)
             
-            Text("Sign Up to continue")
+            Text("Create your account 🌱")
+                .font(.title2)
+                .fontWeight(.semibold)
+            
+            Text("Join us to explore and read more")
+                .font(.subheadline)
                 .foregroundColor(.gray)
-                .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(.top, 40)
-        //            .padding(.bottom, 30)
+        .multilineTextAlignment(.center)
+        .padding(.bottom, 20)
     }
     
+    // MARK: - First Name
     private var firstNameField: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            TextField("First name", text: $viewModel.firstName)
-                .padding()
-                .cornerRadius(25)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 25)
-                        .stroke(Color(.systemGray4), lineWidth: 1)
-                }
-                .onChange(of: viewModel.firstName) { viewModel.validatFirstName() }
-            if viewModel.showFirstNameError {
-                Text("The name should have more than 2 characters.")
-                    .font(.caption)
-                    .foregroundColor(.red)
-                    .padding(.leading, 4)
-            }
+        textFieldWithValidation(
+            icon: "person",
+            placeholder: "First name",
+            text: $viewModel.firstName,
+            error: viewModel.showFirstNameError ? "At least 2 characters" : nil
+        ) {
+            viewModel.validatFirstName()
         }
     }
     
+    // MARK: - Last Name
     private var lastNameField: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            TextField("Last name", text: $viewModel.lastName)
-                .padding()
-                .cornerRadius(25)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 25)
-                        .stroke(Color(.systemGray4), lineWidth: 1)
-                }
-                .onChange(of: viewModel.lastName) { viewModel.validateLastName() }
-            if viewModel.showLastNameError {
-                Text("The name should have more that 2 characters.")
-                    .font(.caption)
-                    .foregroundColor(.red)
-                    .padding(.leading, 4)
-            }
+        textFieldWithValidation(
+            icon: "person",
+            placeholder: "Last name",
+            text: $viewModel.lastName,
+            error: viewModel.showLastNameError ? "At least 2 characters" : nil
+        ) {
+            viewModel.validateLastName()
         }
     }
     
+    // MARK: - Email
     private var emailField: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            TextField("Email", text: $viewModel.email)
-                .keyboardType(.emailAddress)
-                .padding()
-                .cornerRadius(25)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 25)
-                        .stroke(Color(.systemGray4), lineWidth: 1)
-                )
-                .onChange(of: viewModel.email) { viewModel.validateEmail() }
-            if viewModel.showEmailError {
-                Text("Please enter a valid email address")
-                    .font(.caption)
-                    .foregroundColor(.red)
-                    .padding(.leading, 4)
-            }
+        textFieldWithValidation(
+            icon: "envelope",
+            placeholder: "Email",
+            text: $viewModel.email,
+            error: viewModel.showEmailError ? "Enter a valid email" : nil
+        ) {
+            viewModel.validateEmail()
         }
     }
     
+    // MARK: - Password
     private var passwordField: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
+                Image(systemName: "lock")
+                    .foregroundColor(.gray)
                 if isPasswordVisible {
                     TextField("Password", text: $viewModel.password)
                 } else {
                     SecureField("Password", text: $viewModel.password)
                 }
-                Button(action: { isPasswordVisible.toggle() }) {
+                Button { isPasswordVisible.toggle() } label: {
                     Image(systemName: isPasswordVisible ? "eye.fill" : "eye.slash.fill")
                         .foregroundColor(.gray)
                 }
             }
             .padding()
-            .cornerRadius(25)
-            .overlay(
-                RoundedRectangle(cornerRadius: 25)
-                    .stroke(Color(.systemGray4), lineWidth: 1)
-            )
+            .background(Color(.systemGray6))
+            .cornerRadius(12)
             .onChange(of: viewModel.password) { viewModel.validatePassword() }
+            
             if viewModel.showPasswordError {
-                Text("Password must not be less that 8 characters long")
-                    .font(.caption)
+                Text("At least 8 characters")
+                    .font(.caption2)
                     .foregroundColor(.red)
                     .padding(.leading, 4)
             }
         }
     }
     
+    // MARK: - Sign Up Button
     private var signUpButton: some View {
-        Button(action: {
-            Task {
-                await viewModel.signUp()
-            }
-        }) {
+        Button {
+            Task { await viewModel.signUp() }
+        } label: {
             if viewModel.isLoading {
                 ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .foregroundColor(.white)
-                    .fontWeight(.semibold)
+                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.green)
-                    .cornerRadius(25)
+                    .cornerRadius(12)
             } else {
                 Text("Sign Up")
                     .foregroundColor(.white)
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(
-                        !viewModel.isEmailValid || !viewModel.isPasswordValid ?
-                        Color.gray : Color.green
-                    )
-                    .cornerRadius(25)
+                    .background(viewModel.isEmailValid && viewModel.isPasswordValid ? Color.green : Color.gray)
+                    .cornerRadius(12)
                     .shadow(color: Color.green.opacity(0.3), radius: 5, x: 0, y: 3)
             }
         }
         .disabled(!viewModel.isEmailValid || !viewModel.isPasswordValid)
-        .padding(.top, 10)
     }
     
+    // MARK: - Divider
     private var divider: some View {
         HStack {
             Rectangle().frame(height: 1).foregroundColor(.gray.opacity(0.3))
-            Text("Or")
+            Text("Or continue with")
+                .font(.caption)
                 .foregroundColor(.gray)
             Rectangle().frame(height: 1).foregroundColor(.gray.opacity(0.3))
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, 12)
     }
     
-    private var googleSignUPButton: some View {
-        Button(action: {
-            // handle google login
-        }) {
+    // MARK: - Google Button
+    private var googleSignUpButton: some View {
+        Button(action: { /* handle Google */ }) {
             HStack {
                 Image("google")
                     .resizable()
-                    .frame(width: 30, height: 30)
-                Text("Sign Up with Google")
+                    .frame(width: 20, height: 20)
+                Text("Google")
                     .foregroundColor(.black)
-                    .fontWeight(.semibold)
+                    .fontWeight(.medium)
             }
             .frame(maxWidth: .infinity)
             .padding()
             .background(Color.white)
-            .cornerRadius(25)
-            .shadow(color: Color.green.opacity(0.3), radius: 5, x: 0, y: 3)
-            .overlay(
-                RoundedRectangle(cornerRadius: 25)
-                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-            )
+            .cornerRadius(12)
+            .shadow(color: Color.gray.opacity(0.15), radius: 5, x: 0, y: 2)
         }
     }
     
-    private var SignInButton: some View {
+    // MARK: - Footer
+    private var signInButton: some View {
         HStack {
             Text("Already have an account?")
                 .foregroundColor(.gray)
-            Button(action: {
-                dismiss()
-            }) {
+            Button { dismiss() } label: {
                 Text("Sign In")
                     .foregroundColor(.green)
                     .fontWeight(.semibold)
             }
         }
-        .padding(.bottom, 20)
+        .font(.footnote)
+        .padding(.bottom, 30)
     }
     
-    
+    // MARK: - Helper for TextFields
+    private func textFieldWithValidation(icon: String, placeholder: String, text: Binding<String>, error: String?, onChange: @escaping () -> Void) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Image(systemName: icon)
+                    .foregroundColor(.gray)
+                TextField(placeholder, text: text)
+                    .onChange(of: text.wrappedValue) { _ in onChange() }
+            }
+            .padding()
+            .background(Color(.systemGray6))
+            .cornerRadius(12)
+            
+            if let error = error {
+                Text(error)
+                    .font(.caption2)
+                    .foregroundColor(.red)
+                    .padding(.leading, 4)
+            }
+        }
+    }
 }

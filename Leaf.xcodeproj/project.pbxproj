@@ -37,6 +37,7 @@
 		6DC41F592E772CC200862EE5 /* ImageRepositoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41F582E772CC200862EE5 /* ImageRepositoryUseCase.swift */; };
 		6DC41F5B2E772E2A00862EE5 /* OLCoversAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41F5A2E772E2A00862EE5 /* OLCoversAPI.swift */; };
 		6DE337B22E7FFDDA0004FFBD /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE337B12E7FFDDA0004FFBD /* Book.swift */; };
+		6DE337B42E8002A10004FFBD /* BookDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE337B32E8002A10004FFBD /* BookDescription.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		6DC41F582E772CC200862EE5 /* ImageRepositoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepositoryUseCase.swift; sourceTree = "<group>"; };
 		6DC41F5A2E772E2A00862EE5 /* OLCoversAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLCoversAPI.swift; sourceTree = "<group>"; };
 		6DE337B12E7FFDDA0004FFBD /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		6DE337B32E8002A10004FFBD /* BookDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDescription.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				6D2145E82E677E3D0018B59A /* SignIn */,
 				6D3B233A2E68DDDF009707F8 /* Authentication */,
 				6D3B241D2E68EBE8009707F8 /* SettingView.swift */,
+				6DE337B32E8002A10004FFBD /* BookDescription.swift */,
 			);
 			path = Leaf;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				6DBD6F7F2E76E52B00A22C2B /* Subject.swift in Sources */,
 				6D7683822E7477F3006470D0 /* SearchViewModel.swift in Sources */,
 				6D2145ED2E6786200018B59A /* SignUpViewModel.swift in Sources */,
+				6DE337B42E8002A10004FFBD /* BookDescription.swift in Sources */,
 				6DBD6F752E76D87F00A22C2B /* APIError.swift in Sources */,
 				6DC41F542E7724C000862EE5 /* CoverViewModel.swift in Sources */,
 				6D3B241E2E68EBE8009707F8 /* SettingView.swift in Sources */,
