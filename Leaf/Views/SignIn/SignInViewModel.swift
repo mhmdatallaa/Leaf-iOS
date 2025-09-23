@@ -16,13 +16,14 @@ final class SignInViewModel: ObservableObject {
     @Published var alertMessage: String = ""
     @Published var showAlert: Bool = false
     @Published var isLoading: Bool = false
+//    var authenticatedUser: AuthDataResult? = nil
+    
     
     // Validation states
     @Published var isEmailValid: Bool = false
     @Published var showEmailError: Bool = false
     @Published var isPasswordValid: Bool = false
     @Published var showPasswordError: Bool = false
-    
     
     func signIn() async -> Bool {
         

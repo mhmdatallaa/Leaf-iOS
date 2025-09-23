@@ -8,11 +8,13 @@
 import Foundation
 import FirebaseAuth
 
-
- struct AuthDataResult {
+struct AuthDataResult {
     let uid: String
     let name: String?
-    let email: String?
+    var firstName: String? = nil
+    var lastName: String? = nil
+    var email: String?
+    var photoURL: String? = nil
     
     init(user: User) {
         self.uid = user.uid

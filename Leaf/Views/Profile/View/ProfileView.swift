@@ -34,8 +34,12 @@ struct ProfileView: View {
                     
                     Spacer(minLength: 40)
                 }
+
             }
-            .navigationTitle("Profile")
+            .navigationTitle("My Profile")
+            .task {
+                await viewModel.loadCurrentUser()
+            }
         }
     }
 }
@@ -49,18 +53,18 @@ struct ProfileView: View {
 extension ProfileView {
     private var headerSection: some View {
         VStack(spacing: 12) {
-            Image("profile_placeholder") // replace with AsyncImage for remote
+            Image(systemName: "person") // replace with AsyncImage for remote
                 .resizable()
-                .scaledToFill()
                 .frame(width: 100, height: 100)
+                .scaledToFit()
                 .clipShape(Circle())
                 .overlay(Circle().stroke(Color.green, lineWidth: 2))
             
-            Text("John Doe")
+            Text("\(viewModel.user?.firstName ?? "") \(viewModel.user?.lastName ?? "")")
                 .font(.title2)
                 .fontWeight(.bold)
             
-            Text("john.doe@email.com")
+            Text("\(viewModel.user?.email ?? "")")
                 .font(.subheadline)
                 .foregroundColor(.gray)
         }

@@ -30,7 +30,6 @@ struct SearchView: View {
                 booksSection
             }
             .navigationTitle("Leaf")
-            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 Task { await viewModel.getBooksBySubject("fantasy") }
             }

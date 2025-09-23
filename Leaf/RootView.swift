@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct RootView: View {
-    //    @Binding var name: String
     @State private var showSignInView: Bool = false
     
     var body: some View {
