@@ -11,30 +11,20 @@ import Foundation
 
 // MARK: - Search
 struct Search: Codable {
-    let numFound, start: Int?
-    let numFoundExact: Bool?
-    let searchNumFound: Int?
-    let documentationURL: String?
-    let q: String?
     let docs: [Doc]?
 
     enum CodingKeys: String, CodingKey {
-        case numFound, start, numFoundExact
-        case searchNumFound = "num_found"
-        case documentationURL = "documentation_url"
-        case q, docs
+        case docs
     }
 }
 
 // MARK: - Doc
 struct Doc: Codable {
     let authorKey, authorName: [String]?
-    let coverEditionKey: String?
     let coverI: Int?
     let editionCount, firstPublishYear: Int?
     let hasFulltext: Bool?
     let ia: [String]?
-    let iaCollectionS, key: String?
     let language: [String]?
     let lendingEditionS, lendingIdentifierS: String?
     let publicScanB: Bool?
@@ -46,14 +36,12 @@ struct Doc: Codable {
     enum CodingKeys: String, CodingKey {
         case authorKey = "author_key"
         case authorName = "author_name"
-        case coverEditionKey = "cover_edition_key"
         case coverI = "cover_i"
         case editionCount = "edition_count"
         case firstPublishYear = "first_publish_year"
         case hasFulltext = "has_fulltext"
         case ia
-        case iaCollectionS = "ia_collection_s"
-        case key, language
+        case language
         case lendingEditionS = "lending_edition_s"
         case lendingIdentifierS = "lending_identifier_s"
         case publicScanB = "public_scan_b"

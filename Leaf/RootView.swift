@@ -14,14 +14,17 @@ struct RootView: View {
     var body: some View {
         ZStack {
             NavigationStack {
-                
                 TabView {
                     SearchView()
-                    SettingView(showLoginView: $showSignInView, name: "")
+                        .tabItem {
+                            Label("Search", systemImage: "magnifyingglass")
+                        }
+                    ProfileView(showSignInView: $showSignInView)
+                        .tabItem {
+                            Label("Profile", systemImage: "person")
+                        }
                     
                 }
-                //
-                //                SettingView(showLoginView: $showSignInView, name: "")
             }
         }
         .onAppear {
