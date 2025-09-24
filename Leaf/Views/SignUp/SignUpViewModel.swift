@@ -31,12 +31,9 @@ class SignUpViewModel: ObservableObject {
         do {
             isLoading = true
             try await AuthService.shared.createUser(email: email, password: password)
-            var authDataModel = try await AuthService.shared.getAuthenticatedUser()
-            authDataModel.firstName = firstName
-            authDataModel.lastName = lastName
-            authDataModel.email = email
-            Logger.shared.log("Data Mode: \(authDataModel)")
-            try await UserManager.shared.createUser(auth: authDataModel)
+            let authDataModel = try await AuthService.shared.getAuthenticatedUser()
+            let user = DBUser(firstName: firstName, lastName: lastName, authUser: authDataModel)
+            try UserManager.shared.createUser(user: user)
             isLoading = false
             showAlert = true
             alertMessage = "Signed up successfully, go to sign-in page and use your email and password to sign in."

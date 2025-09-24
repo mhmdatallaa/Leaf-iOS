@@ -133,7 +133,7 @@
 				6D2145E12E677E390018B59A /* LeafApp.swift */,
 				6D3B232E2E68DBC1009707F8 /* GoogleService-Info.plist */,
 				6D3B233A2E68DDDF009707F8 /* Authentication */,
-				6D78B2332E82F2F000FA4255 /* UserManager.swift */,
+				6D7948E42E841F7900678343 /* Firestore */,
 			);
 			path = Leaf;
 			sourceTree = "<group>";
@@ -215,6 +215,14 @@
 				6D7683812E7477F3006470D0 /* SearchViewModel.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		6D7948E42E841F7900678343 /* Firestore */ = {
+			isa = PBXGroup;
+			children = (
+				6D78B2332E82F2F000FA4255 /* UserManager.swift */,
+			);
+			path = Firestore;
 			sourceTree = "<group>";
 		};
 		6DBD6F732E76D85200A22C2B /* Networking */ = {
