@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct SearchView: View {
-    @StateObject private var viewModel = SearchViewModel()
+struct ExploreView: View {
+    @StateObject private var viewModel = ExploreViewModel()
     @State private var selectedSubject = ""
 
     var body: some View {
@@ -39,12 +39,12 @@ struct SearchView: View {
 
 #Preview {
     NavigationView {
-        SearchView()
+        ExploreView()
     }
 }
 
 // MARK: - UI Components
-extension SearchView {
+extension ExploreView {
     private var searchField: some View {
         HStack(spacing: 8) {
             Image(systemName: "magnifyingglass")
@@ -104,6 +104,13 @@ extension SearchView {
                     ForEach(viewModel.books) { book in
                         NavigationLink(destination: BookDescriptionView(book: book)) {
                             BookCellView(book: book)
+                                .contextMenu {
+                                    Button("Add to favorites") {
+                                        Task {
+                                            await viewModel.addUserFavoriteBook(book)
+                                        }
+                                    }
+                                }
                         }
                     }
                 }

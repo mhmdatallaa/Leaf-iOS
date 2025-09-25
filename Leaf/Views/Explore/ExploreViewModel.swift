@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-class SearchViewModel: ObservableObject {
+class ExploreViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var books: [Book] = []
     @Published var cover: UIImage?
@@ -49,5 +49,16 @@ class SearchViewModel: ObservableObject {
         isLoading = false
     }
     
+    
+    func addUserFavoriteBook(_ book: Book) async {
+        do {
+            let authDataResult = try await AuthService.shared.getAuthenticatedUser()
+            try await UserManager.shared.addUserFavoriteBook(userId: authDataResult.uid, book: book)
+            Logger.shared.log("\((book.title) ?? "Untitled") added to favorite")
+
+        } catch {
+            Logger.shared.log("Can't add user favorite book", level: .error)
+        }
+    }
     
 }

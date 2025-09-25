@@ -12,18 +12,8 @@ struct RootView: View {
     
     var body: some View {
         ZStack {
-            NavigationStack {
-                TabView {
-                    SearchView()
-                        .tabItem {
-                            Label("Search", systemImage: "magnifyingglass")
-                        }
-                    ProfileView(showSignInView: $showSignInView)
-                        .tabItem {
-                            Label("Profile", systemImage: "person")
-                        }
-                    
-                }
+            if !showSignInView {
+                TabBarView(showSignInView: $showSignInView)
             }
         }
         .onAppear {

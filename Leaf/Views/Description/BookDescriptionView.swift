@@ -2,6 +2,8 @@ import SwiftUI
 
 struct BookDescriptionView: View {
     let book: Book
+    @State private var viewModel = BookDescriptionViewModel()
+    @State private var shwoAlert: Bool = false
     
     var body: some View {
         ScrollView {
@@ -74,9 +76,28 @@ struct BookDescriptionView: View {
                 }
                 .padding(.horizontal)
                 
+                Button(action: {
+                    Task {
+                        await viewModel.addUserFavoriteBook(book)
+                        shwoAlert.toggle()
+                    }
+                }, label: {
+                    Text("Add to favorites")
+                        .foregroundStyle(.green)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.green.opacity(0.1))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                })
+                .padding(.horizontal)
+                .padding(.top, 20)
                 Spacer(minLength: 40)
             }
         }
+        .alert(viewModel.alertMessage, isPresented: $shwoAlert, actions: {
+            Button("Ok") {}
+        })
         .navigationBarTitleDisplayMode(.inline)
     }
 }

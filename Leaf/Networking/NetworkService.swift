@@ -15,22 +15,30 @@ final class NetworkService {
         guard let request = endpoint.urlRequest else {
             throw APIError.invalidURL
         }
-        
         Logger.shared.log("\(request)")
+        
         let (data, response) = try await URLSession.shared.data(for: request)
         
+        try handleResponse(response)
+        
+        return try decodeData(data, as: T.self)
+    }
+    
+    func decodeData<T: Decodable>  (_ data: Data, as type: T.Type) throws -> T {
+        do {
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch {
+            throw APIError.decodingFailed
+        }
+    }
+    
+    func handleResponse(_ response: URLResponse) throws {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.requestFailed
         }
         
         guard (200...299).contains(httpResponse.statusCode) else {
             throw APIError.serverError(httpResponse.statusCode)
-        }
-        
-        do {
-            return try JSONDecoder().decode(T.self, from: data)
-        } catch {
-            throw APIError.decodingFailed
         }
     }
 }
@@ -43,10 +51,7 @@ extension NetworkService {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode) else {
-            throw APIError.requestFailed
-        }
+        try handleResponse(response)
         
         return data
     }

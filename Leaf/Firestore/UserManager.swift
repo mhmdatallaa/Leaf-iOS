@@ -37,3 +37,36 @@ final class UserManager {
     }
 
 }
+
+// Favorite books section
+extension UserManager {
+    private func userFavoriteBookCollection(userID: String) -> CollectionReference {
+        userDocument(userId: userID).collection("favorite_books")
+    }
+    
+    private func userFavoriteBookDocument(userId: String, favoriteBookID: String) -> DocumentReference {
+        userFavoriteBookCollection(userID: userId).document(favoriteBookID)
+    }
+    
+    func addUserFavoriteBook(userId: String, book: Book) throws {
+        let document = userFavoriteBookCollection(userID: userId).document(book.title!)
+        let documentId = document.documentID
+        let userFavoriteBook = UserFavoriteBook(id: documentId, title: book.title, authorName: book.authors?.first?.name, coverId: book.coverID)
+        try document.setData(from: userFavoriteBook, merge: false, encoder: encoder)
+    }
+    
+    func removeUserFavoriteBook(userId: String, favoriteBookID: String) async throws {
+        try await userFavoriteBookDocument(userId: userId, favoriteBookID: favoriteBookID).delete()
+    }
+    
+    func getUserFavoriteBooks(userID: String) async throws -> [UserFavoriteBook] {
+        let snapshot = try await userFavoriteBookCollection(userID: userID).getDocuments()
+
+        let result = try snapshot.documents.compactMap { document in
+            try document.data(as: UserFavoriteBook.self, decoder: decoder)
+        }
+        return result
+    }
+}
+
+
