@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserFavoriteBook: Codable {
+struct UserBook: Codable, Identifiable {
     let id: String
     let title: String?
     let authorName: String?
@@ -19,5 +19,9 @@ struct UserFavoriteBook: Codable {
         self.authorName = authorName
         self.coverId = coverId
         self.dateCreated = Date()
+    }
+    
+    var toBook: Book {
+        Book(title: title, authors: [Author(key: nil, name: authorName)], coverID: coverId, coverSize: nil, editionCount: nil, firstPublishYear: nil)
     }
 }

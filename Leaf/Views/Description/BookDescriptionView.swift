@@ -1,108 +1,141 @@
+//
+//  BookDescriptionViewModel.swift
+//  Leaf
+//
+//  Created by Mohamed Atallah on 26/09/2025.
+//
+
+
 import SwiftUI
 
 struct BookDescriptionView: View {
     let book: Book
-    @State private var viewModel = BookDescriptionViewModel()
-    @State private var shwoAlert: Bool = false
+    @StateObject private var viewModel = BookDescriptionViewModel()
+    @StateObject private var coverViewModel = CoverViewModel()
+    @State private var showAlert: Bool = false
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(spacing: 28) {
                 
-                // Cover
-                if let coverID = book.coverID {
-                    AsyncImage(url: URL(string: "https://covers.openlibrary.org/b/id/\(coverID)-L.jpg")) { phase in
-                        switch phase {
-                        case .empty:
+                // MARK: - Hero Cover + Title
+                VStack(spacing: 16) {
+                    Group {
+                        if coverViewModel.isLoading {
                             ProgressView()
-                                .frame(width: 180, height: 260)
-                        case .success(let image):
-                            image
+                                .frame(width: 140, height: 200)
+                        } else if let image = coverViewModel.image {
+                            Image(uiImage: image)
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 180, height: 260)
+                                .frame(width: 160, height: 230)
                                 .clipShape(RoundedRectangle(cornerRadius: 16))
-                                .shadow(radius: 6)
-                        case .failure:
-                            Image(systemName: "book.closed")
+                                .shadow(radius: 8)
+                        } else {
+                            Image(systemName: "book.closed.fill")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 120, height: 160)
-                                .foregroundColor(.gray)
-                        @unknown default:
-                            EmptyView()
+                                .frame(width: 140, height: 200)
+                                .foregroundColor(.secondary)
                         }
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding(.top, 30)
-                }
-                
-                // Title & Author
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(book.title ?? "Unknown Title")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.primary)
-                        .multilineTextAlignment(.leading)
                     
-                    Text("by \(book.authors?.first?.name ?? "Unknown Author")")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                    VStack(spacing: 6) {
+                        Text(book.title ?? "Unknown Title")
+                            .font(.title2.bold())
+                            .multilineTextAlignment(.center)
+                        
+                        Text(book.authors?.first?.name ?? "Unknown Author")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
                 }
-                .padding(.horizontal)
+                .frame(maxWidth: .infinity)
+                .padding(.top)
                 
                 Divider()
-                    .padding(.horizontal)
                 
-                // Extra Info
-                VStack(alignment: .leading, spacing: 8) {
+                // MARK: - Info Section
+                HStack(spacing: 24) {
                     if let editionCount = book.editionCount {
-                        HStack {
-                            Text("Editions:")
-                                .fontWeight(.semibold)
-                            Text("\(editionCount)")
-                                .foregroundColor(.secondary)
-                        }
+                        infoCard(title: "Editions", value: "\(editionCount)")
                     }
-                    
                     if let year = book.firstPublishYear {
-                        HStack {
-                            Text("First Published:")
-                                .fontWeight(.semibold)
-                            Text("\(year)")
-                                .foregroundColor(.secondary)
-                        }
+                        infoCard(title: "First Published", value: "\(year)")
                     }
                 }
-                .padding(.horizontal)
+                .frame(maxWidth: .infinity)
                 
-                Button(action: {
-                    Task {
-                        await viewModel.addUserFavoriteBook(book)
-                        shwoAlert.toggle()
+                Divider()
+                
+                // MARK: - Actions
+                VStack(spacing: 14) {
+                    ForEach(UserColletion.allCases, id: \.self) { collection in
+                        AddToCollectionButton(
+                            book: book,
+                            collection: collection,
+                            viewModel: viewModel,
+                            showAlert: $showAlert
+                        )
                     }
-                }, label: {
-                    Text("Add to favorites")
-                        .foregroundStyle(.green)
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.green.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                })
-                .padding(.horizontal)
-                .padding(.top, 20)
-                Spacer(minLength: 40)
+                }
+                
+                Spacer(minLength: 60)
             }
+            .padding(.horizontal)
         }
-        .alert(viewModel.alertMessage, isPresented: $shwoAlert, actions: {
-            Button("Ok") {}
-        })
+        .onAppear {
+            Task { await coverViewModel.getCover(for: book) }
+        }
+        .alert(viewModel.alertMessage, isPresented: $showAlert) {
+            Button("OK") {}
+        }
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    // MARK: - Helper View
+    @ViewBuilder
+    private func infoCard(title: String, value: String) -> some View {
+        VStack(spacing: 4) {
+            Text(value)
+                .font(.headline)
+            Text(title)
+                .font(.caption)
+                .foregroundColor(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(Color(.systemGray6))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
 
-#Preview(traits: .sizeThatFitsLayout) {
+struct AddToCollectionButton: View {
+    let book: Book
+    let collection: UserColletion
+    
+    @ObservedObject var viewModel: BookDescriptionViewModel
+    @Binding var showAlert: Bool
+    
+    var body: some View {
+        Button {
+            Task {
+                await viewModel.addToUserCollection(book: book, collection: collection)
+                showAlert.toggle()
+            }
+        } label: {
+                Text(collection.displayName)
+                    .fontWeight(.semibold)
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color(.systemGray6))
+            .foregroundStyle(.green)
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+#Preview {
     NavigationView {
         BookDescriptionView(book: .sambleData)
     }

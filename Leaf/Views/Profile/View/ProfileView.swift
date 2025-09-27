@@ -27,7 +27,15 @@ struct ProfileView: View {
                         .padding(.horizontal)
                     
                     // MARK: - Settings List
-                    settingsList
+//                    settingsList
+                    
+                    VStack(alignment: .leading, spacing: 20) {
+                        BooksSection(sectionTitle: "Reading", books: viewModel.readingbooks, collection: .reading, profileViewModel: viewModel)
+                            .environmentObject(viewModel)
+                        BooksSection(sectionTitle: "Want to read", books: viewModel.wantToReadBooks, collection: .wantToRead, profileViewModel: viewModel)
+                        BooksSection(sectionTitle: "Read", books: viewModel.readBooks, collection: .read, profileViewModel: viewModel)
+                    }
+                    .padding()
                     
                     // MARK: - Logout Button
                     logoutButton
@@ -35,6 +43,14 @@ struct ProfileView: View {
                     Spacer(minLength: 40)
                 }
 
+            }
+            .onAppear {
+                Task {
+                    await viewModel.loadUserCollection(collection: .reading)
+                    await viewModel.loadUserCollection(collection: .wantToRead)
+                    await viewModel.loadUserCollection(collection: .read)
+                    await viewModel.loadUserCollection(collection: .favorites)
+                }
             }
             .navigationTitle("My Profile")
             .task {
@@ -74,14 +90,14 @@ extension ProfileView {
     private var statsSection: some View {
         HStack(spacing: 40) {
             VStack {
-                Text("120")
+                Text("\(viewModel.readBooks.count)")
                     .font(.headline)
                 Text("Books")
                     .font(.caption)
                     .foregroundColor(.gray)
             }
             VStack {
-                Text("45")
+                Text("\(viewModel.favoriteBooks.count)")
                     .font(.headline)
                 Text("Favorites")
                     .font(.caption)
@@ -90,15 +106,15 @@ extension ProfileView {
         }
     }
     
-    private var settingsList: some View {
-        VStack(spacing: 16) {
-            ProfileRow(icon: "person.crop.circle", title: "Edit Profile")
-            ProfileRow(icon: "heart", title: "Favorites")
-            ProfileRow(icon: "book", title: "My Books")
-            ProfileRow(icon: "gearshape", title: "Settings")
-        }
-        .padding(.horizontal)
-    }
+//    private var settingsList: some View {
+//        VStack(spacing: 16) {
+//            ProfileRow(icon: "person.crop.circle", title: "Edit Profile")
+//            ProfileRow(icon: "heart", title: "Favorites")
+//            ProfileRow(icon: "book", title: "My Books")
+//            ProfileRow(icon: "gearshape", title: "Settings")
+//        }
+//        .padding(.horizontal)
+//    }
     
     private var logoutButton: some View {
         Button(action: {

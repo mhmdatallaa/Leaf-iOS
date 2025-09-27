@@ -20,6 +20,7 @@ class ExploreViewModel: ObservableObject {
     private let getBooksBySubjectUseCase = GetBooksBySubjectUseCase()
     private let searchBooksUseCase = SearchBooksUseCase()
     
+    private let userCollection: UserColletion = UserColletion.favorites
 //    init(repository: BooksRepository = DefaultBooksRepository()) {
 //        self.repository = repository
 //    }
@@ -53,7 +54,7 @@ class ExploreViewModel: ObservableObject {
     func addUserFavoriteBook(_ book: Book) async {
         do {
             let authDataResult = try await AuthService.shared.getAuthenticatedUser()
-            try await UserManager.shared.addUserFavoriteBook(userId: authDataResult.uid, book: book)
+            try userCollection.addUserFavoriteBook(userId: authDataResult.uid, book: book)
             Logger.shared.log("\((book.title) ?? "Untitled") added to favorite")
 
         } catch {

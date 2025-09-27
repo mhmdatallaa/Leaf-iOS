@@ -10,16 +10,43 @@ import Foundation
 @MainActor
 final class BookDescriptionViewModel: ObservableObject {
     @Published var alertMessage: String = ""
-    func addUserFavoriteBook(_ book: Book) async {
-        do {
-            let authDataResult = try await AuthService.shared.getAuthenticatedUser()
-            try UserManager.shared.addUserFavoriteBook(userId: authDataResult.uid, book: book)
-            Logger.shared.log("\((book.title) ?? "Untitled") added to favorite")
-            alertMessage = "Added to favorites"
-        } catch {
-            Logger.shared.log("Can't add user favorite book", level: .error)
-            alertMessage = "Can't add to favorites,try again!"
-
+    
+    func addToUserCollection(book: Book, collection: UserColletion) async {
+        
+        switch collection {
+        case .favorites:
+            do {
+                try await handleUserCollection(book: book, collection: collection)
+                alertMessage = "Added to favorites"
+            } catch {
+                alertMessage = "Can't add to favorites,try again!"
+            }
+        case .read:
+            do {
+                try await handleUserCollection(book: book, collection: collection)
+                alertMessage = "Added to Read collection"
+            } catch {
+                alertMessage = "Can't add to Read collection,try again!"
+            }
+        case .wantToRead:
+            do {
+                try await handleUserCollection(book: book, collection: collection)
+                alertMessage = "Added to Want to read collection"
+            } catch {
+                alertMessage = "Can't add to Want to read collection,try again!"
+            }
+        case .reading:
+            do {
+                try await handleUserCollection(book: book, collection: collection)
+                alertMessage = "Added to Reading collection"
+            } catch {
+                alertMessage = "Can't add to Reading collection,try again!"
+            }
         }
+    }
+    
+    private func handleUserCollection(book: Book, collection: UserColletion) async throws {
+        let authDataResult = try await AuthService.shared.getAuthenticatedUser()
+        try collection.addUserFavoriteBook(userId: authDataResult.uid, book: book)
     }
 }
