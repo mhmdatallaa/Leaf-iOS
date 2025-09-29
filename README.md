@@ -11,6 +11,15 @@
 
 Leaf is a beautifully crafted iOS application that helps users discover, explore, and manage their personal book collections. With a focus on clean architecture and modern iOS development practices, this app showcases advanced SwiftUI techniques, Firebase integration, and robust networking capabilities.
 
+<img src="https://github.com/user-attachments/assets/34b1975f-bd9b-46b5-b407-05e514cd9040" width="200"/>
+
+<img src="https://github.com/user-attachments/assets/d25f28c4-094e-4080-a104-e80842dab933" width="200"/>
+
+<img src="https://github.com/user-attachments/assets/cfc5a639-cfe2-49db-acc7-70ea59712b76" width="200"/>
+
+<img src="https://github.com/user-attachments/assets/ab7be792-5cbe-4897-9fdd-e1b52ae2e6c2" width="200"/>
+
+
 ## ✨ Key Features
 
 - **📚 Book Discovery**: Search and explore books across different subjects and categories
