@@ -20,7 +20,7 @@
 		6D3B23332E68DC48009707F8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3B23322E68DC48009707F8 /* FirebaseAnalytics */; };
 		6D3B23352E68DC48009707F8 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3B23342E68DC48009707F8 /* FirebaseAnalyticsCore */; };
 		6D3B23372E68DC5D009707F8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3B23362E68DC5D009707F8 /* FirebaseAuth */; };
-		6D3B23392E68DDDA009707F8 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B23382E68DDDA009707F8 /* AuthService.swift */; };
+		6D3B23392E68DDDA009707F8 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B23382E68DDDA009707F8 /* AuthManager.swift */; };
 		6D3B24172E68E043009707F8 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B24162E68E043009707F8 /* Logger.swift */; };
 		6D3B241C2E68E6CC009707F8 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B241B2E68E6CC009707F8 /* AuthError.swift */; };
 		6D3B24222E68FDCB009707F8 /* String+Validity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B24212E68FDCB009707F8 /* String+Validity.swift */; };
@@ -36,17 +36,20 @@
 		6D78B2342E82F2F000FA4255 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D78B2332E82F2F000FA4255 /* UserManager.swift */; };
 		6D78B2362E82F2FA00FA4255 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6D78B2352E82F2FA00FA4255 /* FirebaseFirestore */; };
 		6D78B2382E82F34700FA4255 /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D78B2372E82F34700FA4255 /* DBUser.swift */; };
+		6D7FF2A82E918009005D28A9 /* AuthenticationEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7FF2A72E918009005D28A9 /* AuthenticationEngine.swift */; };
+		6D7FF2AA2E918044005D28A9 /* FireBaseAuthenticationEngin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7FF2A92E918044005D28A9 /* FireBaseAuthenticationEngin.swift */; };
+		6D7FF2AC2E91865E005D28A9 /* LeafUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7FF2AB2E91865E005D28A9 /* LeafUser.swift */; };
 		6D89A5192E77E22900F377FD /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D89A5182E77E22900F377FD /* Search.swift */; };
 		6DBD6F752E76D87F00A22C2B /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBD6F742E76D87F00A22C2B /* APIError.swift */; };
 		6DBD6F772E76D94700A22C2B /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBD6F762E76D94700A22C2B /* Endpoint.swift */; };
 		6DBD6F792E76DB9F00A22C2B /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBD6F782E76DB9F00A22C2B /* NetworkService.swift */; };
-		6DBD6F7C2E76DE1D00A22C2B /* OLBooksAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBD6F7B2E76DE1D00A22C2B /* OLBooksAPI.swift */; };
+		6DBD6F7C2E76DE1D00A22C2B /* OLBooksEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBD6F7B2E76DE1D00A22C2B /* OLBooksEndPoint.swift */; };
 		6DBD6F7F2E76E52B00A22C2B /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBD6F7E2E76E52B00A22C2B /* Subject.swift */; };
 		6DBD6F812E76E8DB00A22C2B /* BooksRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBD6F802E76E8DB00A22C2B /* BooksRepository.swift */; };
 		6DC155A22E8753A300DB209C /* BooksSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC155A12E8753A300DB209C /* BooksSection.swift */; };
 		6DC41F542E7724C000862EE5 /* CoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41F532E7724C000862EE5 /* CoverViewModel.swift */; };
 		6DC41F592E772CC200862EE5 /* DefaultBookCoverRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41F582E772CC200862EE5 /* DefaultBookCoverRepository.swift */; };
-		6DC41F5B2E772E2A00862EE5 /* OLCoversAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41F5A2E772E2A00862EE5 /* OLCoversAPI.swift */; };
+		6DC41F5B2E772E2A00862EE5 /* OLCoversEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC41F5A2E772E2A00862EE5 /* OLCoversEndPoint.swift */; };
 		6DE337B22E7FFDDA0004FFBD /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE337B12E7FFDDA0004FFBD /* Book.swift */; };
 		6DE337B42E8002A10004FFBD /* BookDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE337B32E8002A10004FFBD /* BookDescriptionView.swift */; };
 		6DE337B62E8008F20004FFBD /* FetchBookCoverUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE337B52E8008F20004FFBD /* FetchBookCoverUseCase.swift */; };
@@ -71,7 +74,7 @@
 		6D2145EC2E6786200018B59A /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		6D2145EE2E67862A0018B59A /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		6D3B232E2E68DBC1009707F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		6D3B23382E68DDDA009707F8 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		6D3B23382E68DDDA009707F8 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		6D3B24162E68E043009707F8 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6D3B241B2E68E6CC009707F8 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		6D3B24212E68FDCB009707F8 /* String+Validity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validity.swift"; sourceTree = "<group>"; };
@@ -86,17 +89,20 @@
 		6D76838D2E748914006470D0 /* BookCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCellView.swift; sourceTree = "<group>"; };
 		6D78B2332E82F2F000FA4255 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		6D78B2372E82F34700FA4255 /* DBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
+		6D7FF2A72E918009005D28A9 /* AuthenticationEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEngine.swift; sourceTree = "<group>"; };
+		6D7FF2A92E918044005D28A9 /* FireBaseAuthenticationEngin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseAuthenticationEngin.swift; sourceTree = "<group>"; };
+		6D7FF2AB2E91865E005D28A9 /* LeafUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafUser.swift; sourceTree = "<group>"; };
 		6D89A5182E77E22900F377FD /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		6DBD6F742E76D87F00A22C2B /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		6DBD6F762E76D94700A22C2B /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		6DBD6F782E76DB9F00A22C2B /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		6DBD6F7B2E76DE1D00A22C2B /* OLBooksAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLBooksAPI.swift; sourceTree = "<group>"; };
+		6DBD6F7B2E76DE1D00A22C2B /* OLBooksEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLBooksEndPoint.swift; sourceTree = "<group>"; };
 		6DBD6F7E2E76E52B00A22C2B /* Subject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		6DBD6F802E76E8DB00A22C2B /* BooksRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksRepository.swift; sourceTree = "<group>"; };
 		6DC155A12E8753A300DB209C /* BooksSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksSection.swift; sourceTree = "<group>"; };
 		6DC41F532E7724C000862EE5 /* CoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverViewModel.swift; sourceTree = "<group>"; };
 		6DC41F582E772CC200862EE5 /* DefaultBookCoverRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBookCoverRepository.swift; sourceTree = "<group>"; };
-		6DC41F5A2E772E2A00862EE5 /* OLCoversAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLCoversAPI.swift; sourceTree = "<group>"; };
+		6DC41F5A2E772E2A00862EE5 /* OLCoversEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLCoversEndPoint.swift; sourceTree = "<group>"; };
 		6DE337B12E7FFDDA0004FFBD /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		6DE337B32E8002A10004FFBD /* BookDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDescriptionView.swift; sourceTree = "<group>"; };
 		6DE337B52E8008F20004FFBD /* FetchBookCoverUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchBookCoverUseCase.swift; sourceTree = "<group>"; };
@@ -189,8 +195,10 @@
 		6D3B233A2E68DDDF009707F8 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				6D3B23382E68DDDA009707F8 /* AuthService.swift */,
+				6D3B23382E68DDDA009707F8 /* AuthManager.swift */,
 				6D3B241B2E68E6CC009707F8 /* AuthError.swift */,
+				6D7FF2A72E918009005D28A9 /* AuthenticationEngine.swift */,
+				6D7FF2A92E918044005D28A9 /* FireBaseAuthenticationEngin.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -211,6 +219,7 @@
 				6DE337B12E7FFDDA0004FFBD /* Book.swift */,
 				6D78B2372E82F34700FA4255 /* DBUser.swift */,
 				6D6150072E857175009829C5 /* UserBook.swift */,
+				6D7FF2AB2E91865E005D28A9 /* LeafUser.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -283,7 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				6DE337BC2E800C360004FFBD /* Repositories */,
-				6DE337BB2E800BAE0004FFBD /* LeafAPIS */,
+				6DE337BB2E800BAE0004FFBD /* LeafEndPoints */,
 				6DBD6F742E76D87F00A22C2B /* APIError.swift */,
 				6DBD6F762E76D94700A22C2B /* Endpoint.swift */,
 				6DBD6F782E76DB9F00A22C2B /* NetworkService.swift */,
@@ -301,22 +310,6 @@
 			path = UseCases;
 			sourceTree = "<group>";
 		};
-		6DC41F562E772C7000862EE5 /* BooksRepository */ = {
-			isa = PBXGroup;
-			children = (
-				6DBD6F802E76E8DB00A22C2B /* BooksRepository.swift */,
-			);
-			path = BooksRepository;
-			sourceTree = "<group>";
-		};
-		6DC41F572E772C8700862EE5 /* CoverRepository */ = {
-			isa = PBXGroup;
-			children = (
-				6DC41F582E772CC200862EE5 /* DefaultBookCoverRepository.swift */,
-			);
-			path = CoverRepository;
-			sourceTree = "<group>";
-		};
 		6DE337B02E7FF3710004FFBD /* BookCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,20 +319,20 @@
 			path = BookCell;
 			sourceTree = "<group>";
 		};
-		6DE337BB2E800BAE0004FFBD /* LeafAPIS */ = {
+		6DE337BB2E800BAE0004FFBD /* LeafEndPoints */ = {
 			isa = PBXGroup;
 			children = (
-				6DBD6F7B2E76DE1D00A22C2B /* OLBooksAPI.swift */,
-				6DC41F5A2E772E2A00862EE5 /* OLCoversAPI.swift */,
+				6DBD6F7B2E76DE1D00A22C2B /* OLBooksEndPoint.swift */,
+				6DC41F5A2E772E2A00862EE5 /* OLCoversEndPoint.swift */,
 			);
-			path = LeafAPIS;
+			path = LeafEndPoints;
 			sourceTree = "<group>";
 		};
 		6DE337BC2E800C360004FFBD /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				6DC41F572E772C8700862EE5 /* CoverRepository */,
-				6DC41F562E772C7000862EE5 /* BooksRepository */,
+				6DC41F582E772CC200862EE5 /* DefaultBookCoverRepository.swift */,
+				6DBD6F802E76E8DB00A22C2B /* BooksRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -482,12 +475,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D49C7E42E8553DE003523A4 /* TabBarView.swift in Sources */,
-				6D3B23392E68DDDA009707F8 /* AuthService.swift in Sources */,
+				6D3B23392E68DDDA009707F8 /* AuthManager.swift in Sources */,
 				6D76838E2E748914006470D0 /* BookCellView.swift in Sources */,
 				6DBD6F812E76E8DB00A22C2B /* BooksRepository.swift in Sources */,
 				6D2145EB2E677E570018B59A /* SignUpView.swift in Sources */,
-				6DBD6F7C2E76DE1D00A22C2B /* OLBooksAPI.swift in Sources */,
+				6D7FF2A82E918009005D28A9 /* AuthenticationEngine.swift in Sources */,
+				6DBD6F7C2E76DE1D00A22C2B /* OLBooksEndPoint.swift in Sources */,
 				6D2145E42E677E390018B59A /* RootView.swift in Sources */,
+				6D7FF2AA2E918044005D28A9 /* FireBaseAuthenticationEngin.swift in Sources */,
 				6D78B2342E82F2F000FA4255 /* UserManager.swift in Sources */,
 				6DFF456D2E8D5312003A12AF /* AnalyticsManager.swift in Sources */,
 				6DC155A22E8753A300DB209C /* BooksSection.swift in Sources */,
@@ -509,6 +504,7 @@
 				6DBD6F752E76D87F00A22C2B /* APIError.swift in Sources */,
 				6DC41F542E7724C000862EE5 /* CoverViewModel.swift in Sources */,
 				6D49C7E72E8555F6003523A4 /* FavoriteView.swift in Sources */,
+				6D7FF2AC2E91865E005D28A9 /* LeafUser.swift in Sources */,
 				6DFF456B2E8D52A5003A12AF /* FireBaseAnalyticsEnging.swift in Sources */,
 				6DBD6F772E76D94700A22C2B /* Endpoint.swift in Sources */,
 				6D2145E52E677E390018B59A /* LeafApp.swift in Sources */,
@@ -523,7 +519,7 @@
 				6D3B24222E68FDCB009707F8 /* String+Validity.swift in Sources */,
 				6D17B0C92E887375006D6371 /* UserCollection.swift in Sources */,
 				6D89A5192E77E22900F377FD /* Search.swift in Sources */,
-				6DC41F5B2E772E2A00862EE5 /* OLCoversAPI.swift in Sources */,
+				6DC41F5B2E772E2A00862EE5 /* OLCoversEndPoint.swift in Sources */,
 				6D3B24172E68E043009707F8 /* Logger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

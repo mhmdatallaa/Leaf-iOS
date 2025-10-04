@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum OLCoversAPI: Endpoint {
+enum OLCoversEndPoint: Endpoint {
 
     case bookCover(id: Int, size: BookCoverSize)
 

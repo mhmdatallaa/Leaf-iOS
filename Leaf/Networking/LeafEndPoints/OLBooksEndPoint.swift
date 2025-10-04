@@ -9,7 +9,7 @@
 
 import Foundation
 
-enum OLBooksAPI: Endpoint {
+enum OLBooksEndPoint: Endpoint {
 
     case search(query: String)
     case booksBySubject(suject: String)

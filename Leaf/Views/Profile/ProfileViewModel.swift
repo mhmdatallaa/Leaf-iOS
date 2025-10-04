@@ -17,7 +17,7 @@ final class ProfileViewModel: ObservableObject {
     
     func logOut() async {
         do {
-            try await AuthService.shared.signOut()
+            try AuthManager.shared.signOut()
         } catch {
             Logger.shared.log("\(error)", level: .error)
         }
@@ -25,8 +25,8 @@ final class ProfileViewModel: ObservableObject {
     
     func loadCurrentUser() async {
         do {
-            let user = try await AuthService.shared.getAuthenticatedUser()
-            self.user = try await UserManager.shared.getUser(userId: user.uid)
+            let user = try AuthManager.shared.getAuthenticatedUser()
+            self.user = try await UserManager.shared.getUser(userId: user.id)
         } catch {
             Logger.shared.log("error fetching user data \(error)")
         }
@@ -35,8 +35,8 @@ final class ProfileViewModel: ObservableObject {
     
     func loadUserCollection(collection: UserColletion) async {
         do {
-            let authDataResult = try await AuthService.shared.getAuthenticatedUser()
-            let userBooks = try await collection.getUserFavoriteBooks(userID: authDataResult.uid)
+            let user = try  AuthManager.shared.getAuthenticatedUser()
+            let userBooks = try await collection.getUserFavoriteBooks(userID: user.id)
             switch collection {
             case .favorites: self.favoriteBooks = userBooks
             case .read: self.readBooks = userBooks
@@ -50,8 +50,8 @@ final class ProfileViewModel: ObservableObject {
     
     func removeBookFromCollection(collection: UserColletion, bookID: String) async {
         do {
-            let authDataResult = try await AuthService.shared.getAuthenticatedUser()
-            try await collection.removeUserFavoriteBook(userId: authDataResult.uid, favoriteBookID: bookID)
+            let user = try AuthManager.shared.getAuthenticatedUser()
+            try await collection.removeUserFavoriteBook(userId: user.id, favoriteBookID: bookID)
         } catch {
             Logger.shared.log("Couldn't remove from \(collection.displayName) collection")
         }

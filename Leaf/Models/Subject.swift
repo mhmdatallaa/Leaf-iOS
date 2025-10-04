@@ -14,10 +14,3 @@ struct Subject: Decodable {
         case name, works
     }
 }
-
-enum BookCoverSize: String, Decodable {
-    case small = "S"
-    case medium = "M"
-    case large = "L"
-}
-

@@ -1,41 +1,30 @@
 //
-//  Authentication.swift
+//  FireBaseAuthenticationEngin.swift
 //  Leaf
 //
-//  Created by Mohamed Atallah on 03/09/2025.
+//  Created by Mohamed Atallah on 04/10/2025.
 //
 
-import Foundation
 import FirebaseAuth
 
-actor AuthManager {
-    private var engine: AuthEngine?
-    static let shared = AuthManager()
-    
-    private init() { }
-    
-    func configure(engine: AuthEngine) {
-        self.engine = engine
-    }
-    
-    func getAuthenticatedUser() throws -> AuthDataResult {
+
+class FireBaseAuthEngin: AuthEngine {
+    func getAuthenticatedUser() throws -> LeafUser {
         guard let user = Auth.auth().currentUser else {
             Logger.shared.log("Can't get authenticated User", level: .error)
             throw AuthError.NotAuthenticated
         }
-        return AuthDataResult(user: user)
+        return AuthDataResult(user: user).toLeafUser
     }
     
-    @discardableResult
-    func createUser(email: String, password: String) async throws -> AuthDataResult {
+    func createUser(email: String, password: String) async throws -> LeafUser {
         let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
-        return AuthDataResult(user: authDataResult.user)
+        return AuthDataResult(user: authDataResult.user).toLeafUser
     }
     
-    @discardableResult
-    func signInUser(email: String, password: String) async throws -> AuthDataResult {
+    func signInUser(email: String, password: String) async throws -> LeafUser {
         let authDataResult = try await Auth.auth().signIn(withEmail: email, password: password)
-        return AuthDataResult(user: authDataResult.user)
+        return AuthDataResult(user: authDataResult.user).toLeafUser
     }
     
     func resetPassword(email: String) async throws {
@@ -60,5 +49,31 @@ actor AuthManager {
     
     func signOut() throws {
         try Auth.auth().signOut()
+    }
+}
+
+
+
+struct AuthDataResult {
+    let uid: String
+    let name: String?
+    var firstName: String? = nil
+    var lastName: String? = nil
+    var email: String?
+    var photoURL: String? = nil
+    
+    init(user: User) {
+        self.uid = user.uid
+        self.name = user.displayName
+        self.email = user.email
+    }
+    
+    var toLeafUser: LeafUser {
+        .init(
+            id: uid,
+            name: name,
+            email: email,
+            photoURL: photoURL
+        )
     }
 }

@@ -53,8 +53,8 @@ class ExploreViewModel: ObservableObject {
     
     func addUserFavoriteBook(_ book: Book) async {
         do {
-            let authDataResult = try await AuthService.shared.getAuthenticatedUser()
-            try userCollection.addUserFavoriteBook(userId: authDataResult.uid, book: book)
+            let user = try  AuthManager.shared.getAuthenticatedUser()
+            try userCollection.addUserFavoriteBook(userId: user.id, book: book)
             Logger.shared.log("\((book.title) ?? "Untitled") added to favorite")
 
         } catch {

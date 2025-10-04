@@ -17,8 +17,8 @@ struct DBUser: Codable {
 }
 
 extension DBUser {
-    init(firstName: String, lastName: String, authUser: AuthDataResult) {
-        self.id = authUser.uid
+    init(firstName: String, lastName: String, authUser: LeafUser) {
+        self.id = authUser.id
         self.firstName = firstName
         self.lastName = lastName
         self.email = authUser.email

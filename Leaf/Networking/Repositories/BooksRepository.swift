@@ -14,13 +14,13 @@ protocol BooksRepository {
 
 struct DefaultBooksRepository: BooksRepository {
     func getBooks(by subject: String) async throws -> Subject {
-        let response: Subject = try await NetworkService.shared.request(OLBooksAPI.booksBySubject(suject: subject), as: Subject.self)
+        let response: Subject = try await NetworkService.shared.request(OLBooksEndPoint.booksBySubject(suject: subject), as: Subject.self)
         
         return response
     }
     
     func searchBooks(query: String) async throws -> Search {
-        let response: Search = try await NetworkService.shared.request(OLBooksAPI.search(query: query), as: Search.self)
+        let response: Search = try await NetworkService.shared.request(OLBooksEndPoint.search(query: query), as: Search.self)
         return response
     }
 }

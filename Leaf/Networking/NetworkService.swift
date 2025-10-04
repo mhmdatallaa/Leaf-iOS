@@ -24,15 +24,16 @@ final class NetworkService {
         return try decodeData(data, as: T.self)
     }
     
-    func decodeData<T: Decodable>  (_ data: Data, as type: T.Type) throws -> T {
+    private func decodeData<T: Decodable>  (_ data: Data, as type: T.Type) throws -> T {
         do {
             return try JSONDecoder().decode(T.self, from: data)
+            
         } catch {
             throw APIError.decodingFailed
         }
     }
     
-    func handleResponse(_ response: URLResponse) throws {
+    private func handleResponse(_ response: URLResponse) throws {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.requestFailed
         }

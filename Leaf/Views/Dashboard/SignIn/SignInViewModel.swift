@@ -29,7 +29,7 @@ final class SignInViewModel: ObservableObject {
         
         do {
             isLoading = true
-            try await AuthService.shared.signInUser(email: email, password: password)
+            try await AuthManager.shared.signInUser(email: email, password: password)
             isLoading = false
             Logger.shared.log("User signed in successfully")
             return true
@@ -45,7 +45,7 @@ final class SignInViewModel: ObservableObject {
     func forgetPassword(for email: String) async {
         do {
             isLoading = true
-            try await  AuthService.shared.resetPassword(email: email)
+            try await  AuthManager.shared.resetPassword(email: email)
             isLoading = false
             showAlert = true
             alertMessage = "An email has been sent, check out your inbox."

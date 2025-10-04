@@ -46,7 +46,7 @@ final class BookDescriptionViewModel: ObservableObject {
     }
     
     private func handleUserCollection(book: Book, collection: UserColletion) async throws {
-        let authDataResult = try await AuthService.shared.getAuthenticatedUser()
-        try collection.addUserFavoriteBook(userId: authDataResult.uid, book: book)
+        let user = try AuthManager.shared.getAuthenticatedUser()
+        try collection.addUserFavoriteBook(userId: user.id, book: book)
     }
 }

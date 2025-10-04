@@ -16,8 +16,8 @@ final class FavoriteViewModel: ObservableObject {
     func getFavorites() async {
         var favoriteBooks: [Book] = []
         do {
-            let authDataResult = try await AuthService.shared.getAuthenticatedUser()
-           let UserFavoriteBooks =  try await userFavoriteBookCollection.getUserFavoriteBooks(userID: authDataResult.uid)
+            let user = try AuthManager.shared.getAuthenticatedUser()
+            let UserFavoriteBooks =  try await userFavoriteBookCollection.getUserFavoriteBooks(userID: user.id)
             
             Logger.shared.log("\(UserFavoriteBooks)")
             for UserFavoriteBook in UserFavoriteBooks {
@@ -32,8 +32,8 @@ final class FavoriteViewModel: ObservableObject {
     
     func removeFavoriteBook(name: String) async {
         do {
-            let authDataResult = try await AuthService.shared.getAuthenticatedUser()
-            try await userFavoriteBookCollection.removeUserFavoriteBook(userId: authDataResult.uid, favoriteBookID: name)
+            let user = try AuthManager.shared.getAuthenticatedUser()
+            try await userFavoriteBookCollection.removeUserFavoriteBook(userId: user.id, favoriteBookID: name)
         } catch {
             Logger.shared.log("Can't remove book from favorites")
         }

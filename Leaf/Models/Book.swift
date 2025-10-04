@@ -24,6 +24,13 @@ struct Book: Identifiable, Decodable {
     }
 }
 
+enum BookCoverSize: String, Decodable {
+    case small = "S"
+    case medium = "M"
+    case large = "L"
+}
+
+
 extension Book {
     static var sambleData: Book {
         Book(title: "Harry Poter", authors: [Author(key: "12818862", name: "J.K Rolling")], coverID: 12818862, coverSize: .medium, editionCount: 1223, firstPublishYear: 11111)
