@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor
 final class FavoriteViewModel: ObservableObject {
-    @Published var favoriteBooks: [Book] = []
+    @Published var books: [Book] = []
     
     let userFavoriteBookCollection: UserColletion = UserColletion.favorites
     
@@ -24,7 +24,7 @@ final class FavoriteViewModel: ObservableObject {
                 let book = Book(title: UserFavoriteBook.title, authors: [Author(key: "", name: UserFavoriteBook.authorName)], coverID: UserFavoriteBook.coverId, coverSize: nil, editionCount: nil, firstPublishYear: nil)
                 favoriteBooks.append(book)
             }
-            self.favoriteBooks = favoriteBooks
+            self.books = favoriteBooks
         } catch {
             Logger.shared.log("Can't fetch user favorite books")
         }

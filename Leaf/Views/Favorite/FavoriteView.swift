@@ -11,7 +11,7 @@ struct FavoriteView: View {
     @StateObject private var viewModel = FavoriteViewModel()
     var body: some View {
         NavigationView {
-            List(viewModel.favoriteBooks) { book in
+            List(viewModel.books) { book in
                     FavoriteBookCell(book: book)
                         .contextMenu {
                             Button("Remove from favorite") {

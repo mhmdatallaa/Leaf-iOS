@@ -14,6 +14,24 @@ final class ProfileViewModel: ObservableObject {
     @Published private(set) var wantToReadBooks: [UserBook] = []
     @Published private(set) var readBooks: [UserBook] = []
     @Published private(set) var favoriteBooks: [UserBook] = []
+    var userCollection: UserColletion
+    
+    init(userCollection: UserColletion = .read) {
+        self.userCollection = userCollection
+    }
+    
+    var books: [UserBook] {
+        switch userCollection {
+        case .favorites:
+            favoriteBooks
+        case .read:
+            readBooks
+        case .wantToRead:
+            wantToReadBooks
+        case .reading:
+            readingbooks
+        }
+    }
     
     func logOut() async {
         do {

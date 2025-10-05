@@ -70,13 +70,21 @@ struct BookDescriptionView: View {
                 
                 // MARK: - Actions
                 VStack(spacing: 14) {
-                    ForEach(UserColletion.allCases, id: \.self) { collection in
-                        AddToCollectionButton(
-                            book: book,
-                            collection: collection,
-                            viewModel: viewModel,
-                            showAlert: $showAlert
-                        )
+                    LazyVGrid(columns: [
+                        GridItem(.flexible(minimum: 50, maximum: .infinity)),
+                        GridItem(.flexible(minimum: 50, maximum: .infinity))
+                    ],
+                              alignment: .leading,
+                              spacing: 10
+                    ) {
+                        ForEach(UserColletion.allCases, id: \.self) { collection in
+                            AddToCollectionButton(
+                                book: book,
+                                collection: collection,
+                                viewModel: viewModel,
+                                showAlert: $showAlert
+                            )
+                        }
                     }
                 }
                 
@@ -132,6 +140,7 @@ struct AddToCollectionButton: View {
             .foregroundStyle(.green)
         }
         .buttonStyle(.plain)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
 

@@ -10,6 +10,7 @@ import SwiftUI
 struct ExploreView: View {
     @StateObject private var viewModel = ExploreViewModel()
     @State private var selectedSubject = ""
+    @State private var bookSectionTitle = "Popular"
 
     var body: some View {
         NavigationView {
@@ -53,6 +54,7 @@ extension ExploreView {
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
                 .onChange(of: viewModel.searchText) { _, newValue in
+                    bookSectionTitle = "Search for '\(viewModel.searchText)'"
                     Task { await viewModel.searchBook(newValue) }
                 }
         }
@@ -80,6 +82,7 @@ extension ExploreView {
                         .foregroundStyle(selectedSubject == subject && viewModel.searchText.isEmpty ? .white : .primary)
                         .onTapGesture {
                             viewModel.searchText = ""
+                            bookSectionTitle = subject
                             withAnimation(.easeInOut) {
                                 selectedSubject = subject
                             }
@@ -93,7 +96,7 @@ extension ExploreView {
 
     private var booksSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(viewModel.searchText.isEmpty ? "Popular Books" : "Results for \"\(viewModel.searchText)\"")
+            Text(bookSectionTitle)
                 .font(.headline)
                 .padding(.horizontal)
 

@@ -20,7 +20,7 @@ struct BooksSection: View {
                 Text(sectionTitle)
                     .font(.headline)
                 Spacer()
-                if books.count > 6 {
+                if books.count > 5 {
                     Button("See all") {
                         presentSheet = true
                     }
@@ -38,7 +38,7 @@ struct BooksSection: View {
             }
         }
         .sheet(isPresented: $presentSheet) {
-            FavoriteView()
+            UserCollectionView(viewModel: profileViewModel, collection: collection, books: books)
         }
     }
 }

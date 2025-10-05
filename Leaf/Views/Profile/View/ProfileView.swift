@@ -11,6 +11,7 @@ struct ProfileView: View {
     
     @StateObject private var viewModel = ProfileViewModel()
     @Binding var showSignInView: Bool
+    @State private var showSettingsView = false
     
     var body: some View {
         NavigationView {
@@ -36,13 +37,23 @@ struct ProfileView: View {
                         BooksSection(sectionTitle: "Read", books: viewModel.readBooks, collection: .read, profileViewModel: viewModel)
                     }
                     .padding()
-                    
-                    // MARK: - Logout Button
-                    logoutButton
-                    
+                                        
                     Spacer(minLength: 40)
                 }
 
+            }
+            .sheet(isPresented: $showSettingsView, content: {
+                logoutButton
+            })
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showSettingsView = true
+                    } label: {
+                        Image(systemName: "gear")
+                            .fontWeight(.bold)
+                    }
+                }
             }
             .onAppear {
                 Task {
@@ -106,32 +117,14 @@ extension ProfileView {
         }
     }
     
-//    private var settingsList: some View {
-//        VStack(spacing: 16) {
-//            ProfileRow(icon: "person.crop.circle", title: "Edit Profile")
-//            ProfileRow(icon: "heart", title: "Favorites")
-//            ProfileRow(icon: "book", title: "My Books")
-//            ProfileRow(icon: "gearshape", title: "Settings")
-//        }
-//        .padding(.horizontal)
-//    }
-    
     private var logoutButton: some View {
-        Button(action: {
-            Task {
-                await viewModel.logOut()
-                showSignInView = true
+        Form {
+            Button("Logout") {
+                Task {
+                    await viewModel.logOut()
+                    showSignInView = true
+                }
             }
-        }) {
-            Text("Log Out")
-                .foregroundColor(.red)
-                .fontWeight(.semibold)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.red.opacity(0.1))
-                .cornerRadius(12)
         }
-        .padding(.horizontal)
-        .padding(.top, 20)
     }
 }
