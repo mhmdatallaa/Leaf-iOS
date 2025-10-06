@@ -62,3 +62,17 @@ extension LeafCache {
         }
     }
 }
+
+extension LeafCache {
+    subscript(key: Key) -> Value? {
+        get {
+            value(forKey: key)
+        } set {
+            guard let newValue else {
+                removeValue(forKey: key)
+                return
+            }
+            insert(value: newValue, forKey: key)
+        }
+    }
+}
