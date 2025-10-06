@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GetBooksBySubjectUseCase {
+final class GetBooksBySubjectUseCase {
     private let repository: BooksRepository
     
     init(repository: BooksRepository = DefaultBooksRepository()) {

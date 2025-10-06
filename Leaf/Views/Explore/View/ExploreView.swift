@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExploreView: View {
     @StateObject private var viewModel = ExploreViewModel()
-    @State private var selectedSubject = ""
+    @State private var selectedSubject = "self-help"
     @State private var bookSectionTitle = "Popular"
 
     var body: some View {
@@ -31,8 +31,8 @@ struct ExploreView: View {
                 booksSection
             }
             .navigationTitle("Leaf")
-            .onAppear {
-                Task { await viewModel.getBooksBySubject("fantasy") }
+            .task {
+                await viewModel.getBooksBySubject(selectedSubject)
             }
         }
     }
@@ -109,9 +109,7 @@ extension ExploreView {
                             BookCellView(book: book)
                                 .contextMenu {
                                     Button("Add to favorites") {
-                                        Task {
-                                            await viewModel.addUserFavoriteBook(book)
-                                        }
+                                        Task { await viewModel.addUserFavoriteBook(book) }
                                     }
                                 }
                         }

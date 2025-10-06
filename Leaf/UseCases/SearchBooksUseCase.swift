@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SearchBooksUseCase {
+final class SearchBooksUseCase {
     private let repository: BooksRepository
     
     init(repository: BooksRepository = DefaultBooksRepository()) {
