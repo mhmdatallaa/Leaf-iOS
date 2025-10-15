@@ -1,6 +1,6 @@
 # 🍃 Leaf - iOS Book Discovery App
 
-> A modern iOS application for book discovery and personal library management, built with SwiftUI and Firebase.
+> An iOS application for book discovery and personal library management, built with SwiftUI and Firebase.
 
 [![iOS](https://img.shields.io/badge/iOS-15.0+-blue.svg)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-5.7-orange.svg)](https://swift.org/)
@@ -9,15 +9,20 @@
 
 ## 📱 Overview
 
+
 Leaf is a beautifully crafted iOS application that helps users discover, explore, and manage their personal book collections. With a focus on clean architecture and modern iOS development practices, this app showcases advanced SwiftUI techniques, Firebase integration, and robust networking capabilities.
 
-<img src="https://github.com/user-attachments/assets/34b1975f-bd9b-46b5-b407-05e514cd9040" width="200"/>
+<img src="https://github.com/user-attachments/assets/7850dfb5-5881-4ee2-bd9b-e970539e54ab" width="200"/>
 
-<img src="https://github.com/user-attachments/assets/d25f28c4-094e-4080-a104-e80842dab933" width="200"/>
+<img src="https://github.com/user-attachments/assets/1e96b662-404b-4a9c-abb8-244e07a5a931" width="200"/>
 
-<img src="https://github.com/user-attachments/assets/cfc5a639-cfe2-49db-acc7-70ea59712b76" width="200"/>
+<img src="https://github.com/user-attachments/assets/f62325ed-9296-4e2b-b429-344bb32ec73c" width="200"/>
 
-<img src="https://github.com/user-attachments/assets/ab7be792-5cbe-4897-9fdd-e1b52ae2e6c2" width="200"/>
+<img src="https://github.com/user-attachments/assets/80360f4c-21d0-4800-9b36-8f6fda60e68e" width="200"/>
+
+<img src="https://github.com/user-attachments/assets/f7e3f4d9-75ca-475b-a735-8c069af2a2ae" width="200"/>
+
+<img src="https://github.com/user-attachments/assets/cff954b5-e887-4179-bfb0-5cfad6720ed8" width="200"/>
 
 
 ## ✨ Key Features
@@ -142,7 +147,6 @@ Leaf/
 
 ## 🔮 Future Enhancements
 
-- [ ] **Dark Mode**: Complete dark theme implementation
 - [ ] **Book Reviews**: User review and rating system
 - [ ] **Social Features**: Book recommendations and sharing
 - [ ] **Offline Mode**: Enhanced offline functionality
