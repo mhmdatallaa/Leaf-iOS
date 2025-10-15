@@ -80,12 +80,13 @@ struct ProfileView: View {
 extension ProfileView {
     private var headerSection: some View {
         VStack(spacing: 12) {
-            Image(systemName: "person") // replace with AsyncImage for remote
-                .resizable()
-                .frame(width: 100, height: 100)
-                .scaledToFit()
-                .clipShape(Circle())
-                .overlay(Circle().stroke(Color.green, lineWidth: 2))
+//            Image(systemName: "person") // replace with AsyncImage for remote
+//                .resizable()
+//                .frame(width: 100, height: 100)
+//                .scaledToFit()
+//                .clipShape(Circle())
+//                .overlay(Circle().stroke(Color.green, lineWidth: 2))
+            InitialImage(text: (viewModel.user?.firstName ?? "")  + " " + (viewModel.user?.lastName ?? "") )
             
             Text("\(viewModel.user?.firstName ?? "") \(viewModel.user?.lastName ?? "")")
                 .font(.title2)
